@@ -3,7 +3,18 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    # En la siguiente instruccion, toma todos los libros con el metodo .all, y luego los ordena
+    # con el metodo order, y dentro de los parentesis de order, le indica que sea por el atributo "title",
+    # y en orden ascendente.
+    @books = Book.all.order(title: :asc)
+
+    # Lo siguiente es para detectar si se ha mandado el parametro "status", a traves de la URL.
+    if params[:status] and params[:status] != 'all'
+      # el método "where" filtra dentro del arreglo @books solamente los objetos book que tengan su atributo "status" igual al elemento :status
+      # dentro de la variable params.
+      @books = @books.where(status: params[:status]).order(title: :asc)
+    end
+
   end
 
   # GET /books/1 or /books/1.json

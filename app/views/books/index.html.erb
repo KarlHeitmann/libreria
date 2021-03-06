@@ -2,6 +2,23 @@
 
 <h1>Books</h1>
 
+<!--
+  Aqui esta el formulario, es muy similar al formulario del desafio de proyectos
+  Vea el método/acción del controlador books asociada a esta vista: books#index
+-->
+<%= form_with url: 'books', method: :get do |form| %>
+  <div>
+    <%=form.label :query, "Filtrar libros:" %>
+    <%= form.select :status, [
+      ["Todos", :all],
+      ["En estante", :shelf], ["Prestado", :lent]
+    ],{selected: params[:status]}, class:'form-control' %>
+  </div>
+  <%= form.submit "Buscar" %>
+<% end %>
+<!-- FIN DEL FORMULARIO -->
+
+
 <table>
   <thead>
     <tr>
