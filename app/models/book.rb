@@ -12,4 +12,8 @@
 #  updated_at :datetime         not null
 #
 class Book < ApplicationRecord
+  validates :title, presence: true
+  validates :status, presence: true
+
+  enum status: [:shelf, :lent]
 end
