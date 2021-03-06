@@ -15,6 +15,7 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validates :status, presence: true
 
+  # XXX
   # enum es el que permite establecer una relación
   # entre el integer que se guarda en la base de datos,
   # y la palabra asociada a ese estado.

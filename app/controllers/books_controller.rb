@@ -3,11 +3,13 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
+    # XXX
     # En la siguiente instruccion, toma todos los libros con el metodo .all, y luego los ordena
     # con el metodo order, y dentro de los parentesis de order, le indica que sea por el atributo "title",
     # y en orden ascendente.
     @books = Book.all.order(title: :asc)
 
+    # XXX
     # Lo siguiente es para detectar si se ha mandado el parametro "status", a traves de la URL.
     if params[:status] and params[:status] != 'all'
       # el método "where" filtra dentro del arreglo @books solamente los objetos book que tengan su atributo "status" igual al elemento :status
@@ -70,7 +72,18 @@ class BooksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
-      @book = Book.find(params[:id])
+      # XXX
+      # Lo que hace esto es primero buscar el libro usando params[:id], y en caso de que ocurra un error,
+      # entonces salta a la linea , donde redirecciona al metodo index de este controlador.
+      # En este caso, decidimos redireccionar al index, pero ¿Qué otra solución hay? enviarlo a una página especial
+      # donde no se encuentran los objetos? O mandarlo a una página donde diga que no se encuentra el libro?
+      # O mandarlo a una página con un buscador alternativo? Se puede usar render?
+      begin
+        @book = Book.find(params[:id])
+      rescue ActiveRecord::RecordNotFound => e
+        redirect_to books_url, notice: "ERROR: Libro no encontrado"
+      end
+
     end
 
     # Only allow a list of trusted parameters through.
