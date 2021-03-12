@@ -25,6 +25,7 @@ class BooksController < ApplicationController
 
   # GET /books/new
   def new
+    @category = Category.find(params[:category_id])
     @book = Book.new
   end
 
