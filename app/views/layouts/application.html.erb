@@ -24,6 +24,14 @@
       </ol>
     </nav>
     <div class="container">
+      <% flash.each do |k, v| %>
+        <div class="alert alert-<%= k %> alert-dismissible fade show" role="alert">
+          <%= v %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
