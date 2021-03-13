@@ -26,15 +26,28 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @breadcrumbs += [
+      {link: category_books_path(@category), text: 'Books', enable: true},
+      {link: '#', text: @book.id, enable: false}
+    ]
   end
 
   # GET /books/new
   def new
+    @breadcrumbs += [
+      {link: category_books_path(@category), text: 'Books', enable: true},
+      {link: '#', text: 'New', enable: false}
+    ]
     @book = Book.new
   end
 
   # GET /books/1/edit
   def edit
+    @breadcrumbs += [
+      {link: category_books_path(@category), text: 'Books', enable: true},
+      {link: category_book_path(@category, @book), text: @book.id, enable: true},
+      {link: '#', text: 'Edit', enable: false}
+    ]
   end
 
   # POST /books or /books.json
