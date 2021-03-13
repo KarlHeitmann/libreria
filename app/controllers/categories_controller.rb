@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
   def show
     @breadcrumbs = [
       {link: root_path, text: 'Categories', enable: true},
-      {link: '#', text: @category.id, enable: false},
+      {link: '#', text: @category.name, enable: false},
     ]
   end
 
@@ -30,7 +30,7 @@ class CategoriesController < ApplicationController
   def edit
     @breadcrumbs = [
       {link: root_path, text: 'Categories', enable: true},
-      {link: @category, text: @category.id, enable: true},
+      {link: @category, text: @category.name, enable: true},
       {link: '#', text: 'Edit', enable: false},
     ]
   end
@@ -41,7 +41,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        flash[:success] = "Category was successfully created."
+        flash[:primary] = "Category was successfully created."
         format.html { redirect_to @category }
         format.json { render :show, status: :created, location: @category }
       else

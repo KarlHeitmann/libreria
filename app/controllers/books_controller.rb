@@ -12,7 +12,7 @@ class BooksController < ApplicationController
     # En la siguiente instruccion, toma todos los libros con el metodo .all, y luego los ordena
     # con el metodo order, y dentro de los parentesis de order, le indica que sea por el atributo "title",
     # y en orden ascendente.
-    @books = Book.all.order(title: :asc)
+    @books = @category.books.all.order(title: :asc)
 
     # XXX
     # Lo siguiente es para detectar si se ha mandado el parametro "status", a traves de la URL.
@@ -28,7 +28,7 @@ class BooksController < ApplicationController
   def show
     @breadcrumbs += [
       {link: category_books_path(@category), text: 'Books', enable: true},
-      {link: '#', text: @book.id, enable: false}
+      {link: '#', text: @book.title, enable: false}
     ]
   end
 
@@ -45,7 +45,7 @@ class BooksController < ApplicationController
   def edit
     @breadcrumbs += [
       {link: category_books_path(@category), text: 'Books', enable: true},
-      {link: category_book_path(@category, @book), text: @book.id, enable: true},
+      {link: category_book_path(@category, @book), text: @book.title, enable: true},
       {link: '#', text: 'Edit', enable: false}
     ]
   end
@@ -121,7 +121,7 @@ class BooksController < ApplicationController
     def set_breadcrumbs
       @breadcrumbs = [
         {link: root_path, text: 'Categories', enable: true},
-        {link: @category, text: @category.id, enable: true},
+        {link: @category, text: @category.name, enable: true},
       ]
     end
 end
