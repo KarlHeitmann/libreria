@@ -1,9 +1,13 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :set_category
+  before_action :set_breadcrumbs
 
   # GET /books or /books.json
   def index
-    @category = Category.find(params[:category_id])
+    @breadcrumbs += [
+      {link: '#', text: 'Books', enable: false}
+    ]
     # XXX
     # En la siguiente instruccion, toma todos los libros con el metodo .all, y luego los ordena
     # con el metodo order, y dentro de los parentesis de order, le indica que sea por el atributo "title",
@@ -22,23 +26,19 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
-    @category = Category.find params[:category_id]
   end
 
   # GET /books/new
   def new
-    @category = Category.find(params[:category_id])
     @book = Book.new
   end
 
   # GET /books/1/edit
   def edit
-    @category = Category.find(params[:category_id])
   end
 
   # POST /books or /books.json
   def create
-    @category = Category.find params[:category_id]
     @book = @category.books.build(book_params)
 
     respond_to do |format|
@@ -54,7 +54,6 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
-    @category = Category.find(params[:category_id])
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to category_books_path(@category), notice: "Book was successfully updated." }
@@ -95,5 +94,16 @@ class BooksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def book_params
       params.require(:book).permit(:title, :author, :status, :checkin, :checkout)
+    end
+
+    def set_category
+      @category = Category.find(params[:category_id])
+    end
+
+    def set_breadcrumbs
+      @breadcrumbs = [
+        {link: root_path, text: 'Categories', enable: true},
+        {link: @category, text: @category.id, enable: true},
+      ]
     end
 end
