@@ -1,25 +1,38 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
-
   # GET /categories or /categories.json
   def index
     @breadcrumbs = [
-      {link: root_path, text: 'Categories', enable: false}
+      {link: '#', text: 'Categories', enable: false}
     ]
+    puts @breadcrumbs
     @categories = Category.all
   end
 
   # GET /categories/1 or /categories/1.json
   def show
+    @breadcrumbs = [
+      {link: root_path, text: 'Categories', enable: true},
+      {link: '#', text: @category.id, enable: false},
+    ]
   end
 
   # GET /categories/new
   def new
+    @breadcrumbs = [
+      {link: root_path, text: 'Categories', enable: true},
+      {link: '#', text: 'New', enable: false},
+    ]
     @category = Category.new
   end
 
   # GET /categories/1/edit
   def edit
+    @breadcrumbs = [
+      {link: root_path, text: 'Categories', enable: true},
+      {link: @category, text: @category.id, enable: true},
+      {link: '#', text: 'Edit', enable: false},
+    ]
   end
 
   # POST /categories or /categories.json
