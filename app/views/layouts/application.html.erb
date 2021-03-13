@@ -12,6 +12,23 @@
   </head>
 
   <body>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Library</li>
+      </ol>
+    </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <% @breadcrumbs.each do |breadcrumb| %>
+          <% if breadcrumb[:enable] %>
+            <li class="breadcrumb-item"><%= link_to breadcrumb[:text], breadcrumb[:link] %></li>
+          <% else %>
+            <li class="breadcrumb-item active"><%= breadcrumb[:text] %></li>
+          <% end %>
+        <% end %>
+      </ol>
+    </nav>
     <div class="container">
       <%= yield %>
     </div>

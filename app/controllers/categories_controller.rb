@@ -3,6 +3,9 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
+    @breadcrumbs = [
+      {link: root_path, text: 'Categories', enable: false}
+    ]
     @categories = Category.all
   end
 
