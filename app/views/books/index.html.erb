@@ -7,15 +7,15 @@
   Aqui esta el formulario, es muy similar al formulario del desafio de proyectos
   Vea el método/acción del controlador books asociada a esta vista: books#index
 -->
-<%= form_with url: 'books', method: :get do |form| %>
-  <div>
-    <%=form.label :query, "Filtrar libros:" %>
+<%= form_with url: 'books', method: :get, class: 'form form-inline' do |form| %>
+  <div class="form-group mb-2">
+    <%= form.label :query, "Filtrar libros:", class: 'mr-3' %>
     <%= form.select :status, [
       ["Todos", :all],
       ["En estante", :shelf], ["Prestado", :lent]
-    ],{selected: params[:status]}, class:'form-control' %>
+    ],{selected: params[:status]}, class:'form-control mr-3' %>
   </div>
-  <%= form.submit "Buscar" %>
+  <%= form.submit "Buscar",  class: "btn btn-primary mb-2" %>
 <% end %>
 <!-- FIN DEL FORMULARIO -->
 
