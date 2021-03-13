@@ -3,6 +3,7 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
+    @category = Category.find(params[:category_id])
     # XXX
     # En la siguiente instruccion, toma todos los libros con el metodo .all, y luego los ordena
     # con el metodo order, y dentro de los parentesis de order, le indica que sea por el atributo "title",
@@ -21,6 +22,7 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @category = Category.find params[:category_id]
   end
 
   # GET /books/new
@@ -31,15 +33,17 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
+    @category = Category.find(params[:category_id])
   end
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @category = Category.find params[:category_id]
+    @book = @category.books.build(book_params)
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: "Book was successfully created." }
+        format.html { redirect_to category_books_path(@category), notice: "Book was successfully created." }
         format.json { render :show, status: :created, location: @book }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -50,9 +54,10 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+    @category = Category.find(params[:category_id])
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: "Book was successfully updated." }
+        format.html { redirect_to category_books_path(@category), notice: "Book was successfully updated." }
         format.json { render :show, status: :ok, location: @book }
       else
         format.html { render :edit, status: :unprocessable_entity }
